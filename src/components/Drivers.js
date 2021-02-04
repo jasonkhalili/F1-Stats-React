@@ -2,11 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 
-const options = [
-  { value: 'Lewis Hamilton', label: 'Lewis Hamilton' },
-  { value: 'Max Verstappen', label: 'Max Verstappen' },
-  { value: 'George Russell', label: 'George Russel' }
-];
+let options = [];
 
 export default class Drivers extends React.Component {
   state = {
@@ -23,6 +19,11 @@ export default class Drivers extends React.Component {
     axios.get('http://ergast.com/api/f1/2020/drivers.json')
     .then(res => {
       const drivers = res.data.MRData.DriverTable.Drivers;
+      
+      // Maps driver names to dropdown options
+      const name = drivers.map(x => x.givenName + " " + x.familyName);
+      options = name.map(n => ({ value: n, label: n}));
+
       this.setState({ drivers });
     })
   }
