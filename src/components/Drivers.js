@@ -38,12 +38,6 @@ export default class Drivers extends React.Component {
           onChange={this.handleChange}
           options={options}
         />
-        <ul>
-          { this.state.drivers.map( e =>
-            <li key={ e.familyName+e.givenName }>
-              { e.givenName } { e.familyName }
-            </li>) }
-        </ul>
       </React.Fragment>
     );
   }
