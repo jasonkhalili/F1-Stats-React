@@ -33,12 +33,12 @@ class YearDropdown extends React.Component {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                        {this.state.list.map(d => <Dropdown.Item onSelect={function() {
+                            console.log(`clicked ${d}`);
+                        }}>{d}</Dropdown.Item>)}
                     </Dropdown.Menu>
                 </Dropdown>
-                <ul>{this.state.list.map(d => <li>{d}</li>)}</ul>
+                
             </>
           );
       }
