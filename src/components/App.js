@@ -1,12 +1,14 @@
 import React from 'react';
-import Drivers from './Drivers';
 
-export default class App extends React.Component {
+import YearDropdown from './YearDropdown';
+
+class App extends React.Component { 
   render() {
     return (
-      <div>
-        <Drivers />
-      </div>
+      <YearDropdown />
     )
   }
+
 }
+
+export default App;
