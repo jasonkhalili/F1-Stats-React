@@ -7,9 +7,17 @@ class YearDropdown extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          list: []
+          list: [],
+          year: 0
         };
-      }    
+      }
+
+      updateYear(p) {
+        console.log("hey");
+        //   this.setState({
+        //       year: p
+        //   })
+      }
     
       componentDidMount() {
         axios.get('http://ergast.com/api/f1/seasons.json?limit=300')
@@ -33,12 +41,12 @@ class YearDropdown extends React.Component {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        {this.state.list.map(d => <Dropdown.Item onSelect={function() {
-                            console.log(`clicked ${d}`);
-                        }}>{d}</Dropdown.Item>)}
+                        {this.state.list.map(d => <Dropdown.Item onSelect={() => this.setState({
+                            year: d
+                        })}>{d}</Dropdown.Item>)}
                     </Dropdown.Menu>
                 </Dropdown>
-                
+                <h1>{this.state.year}</h1>
             </>
           );
       }
