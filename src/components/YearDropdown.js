@@ -11,13 +11,6 @@ class YearDropdown extends React.Component {
           year: 0
         };
       }
-
-      updateYear(p) {
-        console.log("hey");
-        //   this.setState({
-        //       year: p
-        //   })
-      }
     
       componentDidMount() {
         axios.get('http://ergast.com/api/f1/seasons.json?limit=300')
