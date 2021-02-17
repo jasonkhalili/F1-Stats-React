@@ -7,8 +7,7 @@ class YearDropdown extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          list: [],
-          year: 0
+          list: []
         };
       }
     
@@ -34,12 +33,9 @@ class YearDropdown extends React.Component {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                        {this.state.list.map(d => <Dropdown.Item onSelect={() => this.setState({
-                            year: d
-                        })}>{d}</Dropdown.Item>)}
+                        {this.state.list.map(d => <Dropdown.Item onSelect={() => this.props.setYear(d)}>{d}</Dropdown.Item>)}
                     </Dropdown.Menu>
                 </Dropdown>
-                <h1>{this.state.year}</h1>
             </>
           );
       }
