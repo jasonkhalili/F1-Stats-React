@@ -19,7 +19,7 @@ class Cards extends React.Component {
               let data = res.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
               console.log(data);
               this.setState({
-                //drivers: data.map(d => d)
+                drivers: data.map(d => d)
               })
             })
             .catch(function(error) {
@@ -29,20 +29,31 @@ class Cards extends React.Component {
       }
 
     render() {
+      if (this.state.drivers.length === 0) {
         return (
-            <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="holder.js/100px180" />
-            <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                Some quick example text to build on the card title and make up the bulk of
-                the card's content.
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-            </Card.Body>
-            </Card>
+          <div></div>
         )
+      } else {
+          return (
+            <>
+            <div>{this.state.drivers.map(d => 
+              <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Body>
+                    <Card.Title>{d.Driver.givenName} {d.Driver.familyName}</Card.Title>
+                    <Card.Text>
+                    Some quick example text to build on the card title and make up the bulk of
+                    the card's content.
+                    </Card.Text>
+                    <Button variant="primary">Go somewhere</Button>
+                </Card.Body>
+              </Card>
+              )}</div>
+                
+                </>
+        )}
     }
+        
 }
 
 export default Cards;
