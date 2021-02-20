@@ -12,7 +12,7 @@ class Cards extends React.Component {
         };
     }
 
-    componentWillReceiveProps() {
+    componentDidUpdate() {
         if (this.props.year !== 0) {
           axios.get(`http://ergast.com/api/f1/${this.props.year}/driverStandings.json?limit=300`)
             .then(res => {
@@ -38,7 +38,7 @@ class Cards extends React.Component {
             <>
             <div>{this.state.drivers.map(d => 
               <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Img style={{ width: '8rem' }} variant="top" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg" />
                 <Card.Body>
                     <Card.Title>{d.Driver.givenName} {d.Driver.familyName}</Card.Title>
                     <Card.Text>
