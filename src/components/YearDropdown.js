@@ -27,6 +27,7 @@ class YearDropdown extends React.Component {
       render() {
           return (
             <>
+                <div class="container">
                 <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         Dropdown Button
@@ -36,6 +37,7 @@ class YearDropdown extends React.Component {
                         {this.state.list.map(d => <Dropdown.Item onSelect={() => this.props.setYear(d)}>{d}</Dropdown.Item>)}
                     </Dropdown.Menu>
                 </Dropdown>
+                </div>
             </>
           );
       }

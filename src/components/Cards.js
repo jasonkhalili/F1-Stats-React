@@ -36,21 +36,24 @@ class Cards extends React.Component {
       } else {
           return (
             <>
-            <div>{this.state.drivers.map(d => 
-              <Card style={{ width: '18rem' }}>
-                <Card.Img style={{ width: '8rem' }} variant="top" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg" />
-                <Card.Body>
-                    <Card.Title>{d.Driver.givenName} {d.Driver.familyName}</Card.Title>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-              </Card>
-              )}</div>
-                
-                </>
+              <div class="container">
+                <div class="row">
+                  {this.state.drivers.map(d => 
+                  <Card style={{ width: '18rem' }}>
+                    <Card.Img style={{ width: '8rem' }} variant="top" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg" />
+                    <Card.Body>
+                        <Card.Title>{d.Driver.givenName} {d.Driver.familyName}</Card.Title>
+                        <Card.Text>
+                        Some quick example text to build on the card title and make up the bulk of
+                        the card's content.
+                        </Card.Text>
+                        <Button variant="primary">Go somewhere</Button>
+                    </Card.Body>
+                  </Card>
+                  )}
+                </div>
+              </div>
+            </>
         )}
     }
         
