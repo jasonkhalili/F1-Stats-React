@@ -12,7 +12,23 @@ class Cards extends React.Component {
         };
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        if ((this.props.year !== 0) && (this.props.year !== prevProps.year)) {
+          axios.get(`http://ergast.com/api/f1/${this.props.year}/driverStandings.json?limit=300`)
+            .then(res => {
+              let data = res.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+              console.log(data);
+              this.setState({
+                drivers: data.map(d => d)
+              })
+            })
+            .catch(function(error) {
+              console.log(error);
+            })
+        }
+      }
+
+      componentWillReceiveProps() {
         if (this.props.year !== 0) {
           axios.get(`http://ergast.com/api/f1/${this.props.year}/driverStandings.json?limit=300`)
             .then(res => {
