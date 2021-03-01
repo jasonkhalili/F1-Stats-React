@@ -22,7 +22,7 @@ class Cards extends React.Component {
             const promises = data.map(driver =>
               wiki().page(`${driver.Driver.givenName} ${driver.Driver.familyName}`)
               .then(page => page.mainImage())
-            );
+            )
 
             Promise.all(promises).then(images => {
               const newData = data.map((driver, idx) => ({...driver, image: images[idx]}))
