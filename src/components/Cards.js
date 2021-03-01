@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import wiki from 'wikijs';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -17,11 +18,18 @@ class Cards extends React.Component {
         axios.get(`http://ergast.com/api/f1/${this.props.year}/driverStandings.json?limit=300`)
           .then(res => {
             let data = res.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
-            console.log(data);
-            this.setState({
-              drivers: data.map(d => d)
+
+            const promises = data.map(driver =>
+              wiki().page(`${driver.Driver.givenName} ${driver.Driver.familyName}`)
+              .then(page => page.mainImage())
+            );
+
+            Promise.all(promises).then(images => {
+              const newData = data.map((driver, idx) => ({...driver, image: images[idx]}))
+              this.setState({ drivers: newData })
             })
           })
+          .then()
           .catch(function(error) {
             console.log(error);
           })
@@ -34,15 +42,17 @@ class Cards extends React.Component {
           <div></div>
         )
       } else {
+          console.log(this.state.drivers[0])
+          console.log(this.state.drivers[0].image)
           return (
             <>
               <div class="container">
                 <div class="row">
-                  {this.state.drivers.map(d => 
+                  {this.state.drivers.map(driver => 
                   <Card style={{ width: '18rem' }}>
-                    <Card.Img style={{ width: '8rem' }} variant="top" src="https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg" />
+                    <Card.Img style={{ width: '8rem' }} variant="top" src={`${driver.image}`} />
                     <Card.Body>
-                        <Card.Title>{d.Driver.givenName} {d.Driver.familyName}</Card.Title>
+                        <Card.Title>{driver.Driver.givenName} {driver.Driver.familyName}</Card.Title>
                         <Card.Text>
                         Some quick example text to build on the card title and make up the bulk of
                         the card's content.
