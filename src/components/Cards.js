@@ -3,7 +3,6 @@ import axios from 'axios';
 import wiki from 'wikijs';
 
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 
 class Cards extends React.Component {
     constructor(props) {
@@ -19,13 +18,29 @@ class Cards extends React.Component {
           .then(res => {
             let data = res.data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
 
-            const promises = data.map(driver =>
+            const promise1 = data.map(driver =>
               wiki().page(`${driver.Driver.givenName} ${driver.Driver.familyName}`)
               .then(page => page.mainImage())
             )
 
-            Promise.all(promises).then(images => {
-              const newData = data.map((driver, idx) => ({...driver, image: images[idx]}))
+            const promise2 = data.map(driver =>
+              axios.get(`http://ergast.com/api/f1/drivers/${driver.Driver.familyName}/driverStandings.json?limit=500`)
+                .then(res => {
+                  let data = res.data.MRData.StandingsTable.StandingsLists;
+                  
+                  let totalWins = 0, totalPoints = 0;
+                
+                  data.forEach(list => {
+                    totalWins += +list.DriverStandings[0].wins;
+                    totalPoints += +list.DriverStandings[0].points;
+                  })
+
+                  return totalWins
+                })
+            )
+
+            Promise.all(promise1, promise2).then((results) => {
+              const newData = data.map((driver, idx) => ({...driver, image: results[idx]}))
               this.setState({ drivers: newData })
             })
           })
@@ -42,8 +57,6 @@ class Cards extends React.Component {
           <div></div>
         )
       } else {
-          console.log(this.state.drivers[0])
-          console.log(this.state.drivers[0].image)
           return (
             <>
               <div class="container">
@@ -57,7 +70,6 @@ class Cards extends React.Component {
                         Some quick example text to build on the card title and make up the bulk of
                         the card's content.
                         </Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
                     </Card.Body>
                   </Card>
                   )}
