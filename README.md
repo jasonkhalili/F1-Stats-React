@@ -8,3 +8,7 @@ A React web app displaying stats for Formula 1 constructors and drivers
 ## Future Improvments
 
 :point_right: Convert class components to functional components and implement state and effect hooks
+
+## Known Bugs
+
+:point_right: App crashes if no article is found
